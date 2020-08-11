@@ -49,7 +49,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         saveButton = findViewById(R.id.btnSave);
         homeButton = findViewById(R.id.btnHome);
         print(result);
-        Toast.makeText(this, "Test one.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Test done.", Toast.LENGTH_LONG).show();
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
