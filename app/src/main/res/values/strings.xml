@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Psychology counseling app</string>
+    <string name="submit">submit</string>
+    <string name="home">Home</string>
+    <string name="dst">DST</string>
+    <string name="vsts">VSTS</string>
+    <string name="user">User</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_dst_fragment">Hello DST fragment</string>
+    <string name="hello_blank_fragment">Hello world</string>
+
+    <string name="register">REGISTER</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+</resources>
