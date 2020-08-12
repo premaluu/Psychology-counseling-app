@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,8 @@ import com.android.volley.toolbox.Volley;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -51,6 +54,75 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+    private boolean validateEmail()
+    {
+        String emailInput = user_email.getText().toString();
+
+        if(emailInput.isEmpty()){
+            user_email.requestFocus();
+            user_email.setError("Field cannot be empty!");
+            return false;
+        }
+        else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            user_email.requestFocus();
+            user_email.setError("Please enter valid Email id");
+            return false;
+
+        }
+        else{
+            user_email.requestFocus();
+            user_email.setError(null);
+            return true;
+        }
+    }
+    public boolean validatePhone() {
+        String phone = user_mobile.getText().toString();
+
+        if(phone.isEmpty()) {
+            user_mobile.requestFocus();
+            user_mobile.setError("Field must be filled.");
+            return false;
+        } else if(!Patterns.PHONE.matcher(phone).matches()) {
+            user_mobile.requestFocus();
+            user_mobile.setError("Enter valid phone.");
+            return false;
+        } else if(phone.length() < 10) {
+            user_mobile.requestFocus();
+            user_mobile.setError("Phone must 10 digit long.");
+            return false;
+        } else {
+            user_mobile.requestFocus();
+            return true;
+        }
+    }
+    public boolean validatePassword() {
+        String password = user_password.getText().toString();
+        if(password.isEmpty()) {
+            user_password.requestFocus();
+            user_password.setError("Field must be filled.");
+            return false;
+        } else {
+            user_password.requestFocus();
+            return true;
+        }
+    }
+
+    private boolean validateUname()
+    {
+        String unameInput = user_name.getText().toString();
+        if(unameInput.isEmpty())
+        {
+            user_name.requestFocus();
+            user_name.setError("Field cannot be empty!");
+            return false;
+
+        }
+        else{
+            user_name.requestFocus();
+            user_name.setError(null);
+            return true;
+        }
+    }
 
     private void Regist(){
         loading.setVisibility(View.VISIBLE);
@@ -61,8 +133,10 @@ public class RegisterActivity extends AppCompatActivity {
         final String password = this.user_password.getText().toString().trim();
         final String mobile = this.user_mobile.getText().toString().trim();
 
-        if(name.equals("null") || mobile.equals("null") || email.equals("null") || email.equals("null") || password.equals("null")) {
-            Toast.makeText(this, "PLease Enter All The Details!!!", Toast.LENGTH_LONG);
+        if(!validateUname() || !validatePhone() || !validateEmail() || !validatePassword()) {
+            Toast.makeText(this, "PLease Enter All The Correct Details!!!", Toast.LENGTH_LONG);
+            loading.setVisibility(View.GONE);
+            btn_regist.setVisibility(View.VISIBLE);
         }
         else {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGIST,

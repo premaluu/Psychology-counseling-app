@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,11 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                 String mEmail = email.getText().toString().trim();
                 String mPass = password.getText().toString().trim();
 
-                if (!mEmail.isEmpty() || !mPass.isEmpty()) {
+                if (validateEmail() && !mPass.isEmpty()) {
                     Login(mEmail, mPass);
                 } else {
-                    email.setError("Please insert email");
-                    password.setError("Please insert password");
+                    email.setError("Please insert valid email");
+                    loading.setVisibility(View.GONE);
+                    btn_login.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -74,6 +76,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private boolean validateEmail()
+    {
+        String emailInput = email.getText().toString();
+
+        if(emailInput.isEmpty()){
+            email.requestFocus();
+            email.setError("Field cannot be empty!");
+            return false;
+        }
+        else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            email.requestFocus();
+            email.setError("Please enter valid Email id");
+            return false;
+
+        }
+        else{
+            email.requestFocus();
+            email.setError(null);
+            return true;
+        }
     }
 
     private void Login(final String email, final String password) {
@@ -114,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                             e.printStackTrace();
                             loading.setVisibility(View.GONE);
                             btn_login.setVisibility(View.VISIBLE);
-                            Toast.makeText(LoginActivity.this, "Error " +e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Invalid Username and Password", Toast.LENGTH_SHORT).show();
                         }
                     }
 
